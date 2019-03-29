@@ -11,7 +11,7 @@ import GameplayKit
 
 class GameScene: SKScene{
     
-    var player: PlayerPlane!
+  fileprivate var player: PlayerPlane!
   
     override func didMove(to view: SKView) {
         
@@ -25,37 +25,9 @@ class GameScene: SKScene{
         
         spawnPowerUp()
         spawnEnemies()
-        configureUI()
     }
     
-    fileprivate func configureUI() {
-        scoreBackground.position = CGPoint(x: scoreBackground.size.width + 10, y: self.size.height - scoreBackground.size.height / 2 - 10 )
-        scoreBackground.anchorPoint = CGPoint(x: 1.0, y: 0.5)
-        scoreBackground.zPosition = 99
-        addChild(scoreBackground)
-        
-        scoreLabel.horizontalAlignmentMode = .right
-        scoreLabel.verticalAlignmentMode = .center
-        scoreLabel.position = CGPoint(x: -10, y: 3)
-        scoreLabel.zPosition = 100
-        scoreLabel.fontName = "AmericanTypewriter-Bold"
-        scoreLabel.fontSize = 30
-        scoreBackground.addChild(scoreLabel)
-        
-        menuButton.position = CGPoint(x: 20, y: 20)
-        menuButton.anchorPoint = CGPoint(x: 0.0, y: 0.0)
-        menuButton.zPosition = 100
-        addChild(menuButton)
-        
-        let lifes = [life1, life2, life3]
-        for (index, life) in lifes.enumerated() {
-            life.position = CGPoint(x: self.size.width - CGFloat(index + 1) * (life.size.width + 3), y: 20)
-            life.zPosition = 100
-            life.anchorPoint = CGPoint(x: 0.0, y: 0.0)
-            addChild(life)
-        }
-    }
-    
+   
     
     fileprivate func spawnPowerUp() {
         let spawnAction = SKAction.run {
