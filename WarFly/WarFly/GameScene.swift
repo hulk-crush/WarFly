@@ -31,6 +31,7 @@ class GameScene: SKScene{
         
         spawnPowerUp()
         spawnEnemies()
+        configureUI()
     }
     
     fileprivate func configureUI() {
