@@ -98,6 +98,7 @@
 			children = (
 				84D26C1122428C2B0007DBFA /* AppDelegate.swift */,
 				84D26C1722428C2B0007DBFA /* GameScene.swift */,
+				840D006E224CF91000C42F67 /* MenuScene.swift */,
 				84D26C1922428C2B0007DBFA /* GameViewController.swift */,
 				842684B022428ED80035BF23 /* Background.swift */,
 				842684B62244E3780035BF23 /* PlayerPlane.swift */,
@@ -109,7 +110,6 @@
 				840D0070224D1ABF00C42F67 /* BitMaskCategory.swift */,
 				840D006C224CF4BB00C42F67 /* Assets.swift */,
 				840D006A224CF31E00C42F67 /* YellowShot.swift */,
-				840D006E224CF91000C42F67 /* MenuScene.swift */,
 				84F0602B224A8C2900DA2B19 /* BluePowerUp.swift */,
 				84F0602D224A8C4100DA2B19 /* GreenPowerUp.swift */,
 				842684BA22452D510035BF23 /* GameBackgroudSpriteable+Extencion.swift */,
@@ -369,6 +369,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YR78UHPG2L;
 				INFOPLIST_FILE = WarFly/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -387,6 +388,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YR78UHPG2L;
 				INFOPLIST_FILE = WarFly/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -21,7 +21,7 @@ class Shot: SKSpriteNode {
         self.textureAtlas = textureAtlas
         let textureName = textureAtlas.textureNames.sorted()[0]
         let texture = textureAtlas.textureNamed(textureName)
-        textureNameBeingsWith = String(textureName.characters.dropLast(6))
+        textureNameBeingsWith = String(textureName.dropLast(6))
         super.init(texture: texture, color: .clear, size: initialSize)
         self.setScale(0.3)
         self.name = "shotSprite"
@@ -29,9 +29,9 @@ class Shot: SKSpriteNode {
         
         self.physicsBody = SKPhysicsBody(texture: texture, alphaThreshold: 0.5, size: self.size)
         self.physicsBody?.isDynamic = false
-        self.physicsBody?.categoryBitMask = BitMaskCategory.shot
-        self.physicsBody?.collisionBitMask = BitMaskCategory.enemy
-        self.physicsBody?.contactTestBitMask = BitMaskCategory.enemy
+        self.physicsBody?.categoryBitMask = BitMaskCategory.shot.rawValue
+        self.physicsBody?.collisionBitMask = BitMaskCategory.enemy.rawValue
+        self.physicsBody?.contactTestBitMask = BitMaskCategory.enemy.rawValue
     }
     
     func startMovement() {

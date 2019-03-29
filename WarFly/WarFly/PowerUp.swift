@@ -20,7 +20,7 @@ class PowerUp: SKSpriteNode {
         self.textureAtlas = textureAtlas
         let textureName = textureAtlas.textureNames.sorted()[0]
         let texture = textureAtlas.textureNamed(textureName)
-        textureNameBeingsWith = String(textureName.characters.dropLast(6))
+        textureNameBeingsWith = String(textureName.dropLast(6))
         super.init(texture: texture, color: .clear, size: initialSize)
         self.setScale(0.7)
         self.name = "sprite"
@@ -28,9 +28,9 @@ class PowerUp: SKSpriteNode {
         
         self.physicsBody = SKPhysicsBody(texture: texture, alphaThreshold: 0.5, size: self.size)
         self.physicsBody?.isDynamic = true
-        self.physicsBody?.categoryBitMask = BitMaskCategory.powerUp
-        self.physicsBody?.collisionBitMask = BitMaskCategory.player
-        self.physicsBody?.contactTestBitMask = BitMaskCategory.player
+        self.physicsBody?.categoryBitMask = BitMaskCategory.powerUp.rawValue
+        self.physicsBody?.collisionBitMask = BitMaskCategory.player.rawValue
+        self.physicsBody?.contactTestBitMask = BitMaskCategory.player.rawValue
     }
     
     func startMovement() {
