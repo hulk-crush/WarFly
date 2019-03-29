@@ -12,13 +12,7 @@ import GameplayKit
 class GameScene: SKScene{
     
     var player: PlayerPlane!
-    let scoreBackground = SKSpriteNode(imageNamed: "scores")
-    let scoreLabel = SKLabelNode(text: "1000")
-    let menuButton = SKSpriteNode(imageNamed: "menu")
-    let life1 = SKSpriteNode(imageNamed: "life")
-    let life2 = SKSpriteNode(imageNamed: "life")
-    let life3 = SKSpriteNode(imageNamed: "life")
-    
+  
     override func didMove(to view: SKView) {
         
         physicsWorld.contactDelegate = self
