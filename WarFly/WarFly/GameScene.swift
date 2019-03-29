@@ -27,6 +27,7 @@ class GameScene: SKScene{
         
         spawnPowerUp()
         spawnEnemies()
+        createHUD()
     }
     
     fileprivate func createHUD() {
