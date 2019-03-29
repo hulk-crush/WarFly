@@ -11,8 +11,10 @@ import GameplayKit
 
 class GameScene: SKScene{
     
-  fileprivate var player: PlayerPlane!
-  
+    fileprivate var player: PlayerPlane!
+    fileprivate let hud = HUD()
+    fileprivate let screenSize = UIScreen.main.bounds.size
+    
     override func didMove(to view: SKView) {
         
         physicsWorld.contactDelegate = self
@@ -27,7 +29,10 @@ class GameScene: SKScene{
         spawnEnemies()
     }
     
-   
+    fileprivate func createHUD() {
+        addChild(hud)
+        hud.configureUI(screenSize: screenSize)
+    }
     
     fileprivate func spawnPowerUp() {
         let spawnAction = SKAction.run {
