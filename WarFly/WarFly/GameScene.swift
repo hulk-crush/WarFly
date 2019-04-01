@@ -62,8 +62,6 @@ class GameScene: SKScene{
         
     }
 
-    
-    
     fileprivate func spawnSpiralOfEnemies() {
         let enemyTextureAtlas1 = Assets.shared.enemy_1Atlas //SKTextureAtlas(named: "Enemy_1")
         let enemyTextureAtlas2 = Assets.shared.enemy_2Atlas//SKTextureAtlas(named: "Enemy_2")
@@ -128,8 +126,6 @@ class GameScene: SKScene{
         
         player = PlayerPlane.populate(at: CGPoint(x: screen.size.width / 2, y: 100))
         self.addChild(player)
-        
-        
     }
     
     override func didSimulatePhysics() {
@@ -138,7 +134,6 @@ class GameScene: SKScene{
         enumerateChildNodes(withName: "sprite") { (node, stop) in
             if node.position.y <= -100 {
                 node.removeFromParent()
-                
             }
         }
                 enumerateChildNodes(withName: "shotSprite") { (node, stop) in
@@ -154,8 +149,19 @@ class GameScene: SKScene{
         shot.startMovement()
         self.addChild(shot)
     }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let location = touches.first!.location(in: self)
+        let node = self.atPoint(location)
+        
+        if node.name == "pause" {
+            let transition = SKTransition.doorway(withDuration: 1.0)
+            let pauseScene = PauseScene(size: self.size)
+            pauseScene.scaleMode = .aspectFill
+            self.scene!.view?.presentScene(pauseScene, transition: transition)
+        } else {
         playerFire()
+        }
     }
 }
 
