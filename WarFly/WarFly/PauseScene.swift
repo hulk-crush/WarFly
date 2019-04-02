@@ -8,16 +8,13 @@
 
 import SpriteKit
 
-class PauseScene: SKScene {
+class PauseScene: ParentScene {
     
-    let sceneManager = SceneManager.shared
         override func didMove(to view: SKView) {
             
             self.backgroundColor = SKColor(red: 0.15, green: 0.15, blue: 0.3, alpha: 1.0)
             
-            let header = ButtonNode(titled: "pause", backgroundName: "header_background")
-            header.position = CGPoint(x: self.frame.midX, y: self.frame.midY + 150)
-            self.addChild(header)
+            setHeader(withName: "pause", andBackgroung: "header_background")
             
             let titles = ["restart", "options", "resume"]
             
@@ -29,7 +26,15 @@ class PauseScene: SKScene {
                 addChild(button)
             }
         }
-        
+    
+    override func update(_ currentTime: TimeInterval) {
+        if let gameScene = sceneManager.gameScene {
+            if gameScene.isPaused == false {
+                gameScene.isPaused = true
+            }
+        }
+    }
+    
         override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
             let location = touches.first!.location(in: self)
             let node = self.atPoint(location)
@@ -40,6 +45,13 @@ class PauseScene: SKScene {
                 let gameScene = GameScene(size: self.size)
                 gameScene.scaleMode = .aspectFill
                 self.scene!.view?.presentScene(gameScene, transition: transition)
+            } else if node.name == "options" {
+                
+                let transition = SKTransition.crossFade(withDuration: 1.0)
+                let optionsScene = OptionsScene(size: self.size)
+                optionsScene.backScene = self
+                optionsScene.scaleMode = .aspectFill
+                self.scene!.view?.presentScene(optionsScene, transition: transition)
             } else if node.name == "resume" {
                 
                 let transition = SKTransition.crossFade(withDuration: 1.0)
