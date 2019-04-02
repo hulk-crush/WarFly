@@ -15,14 +15,8 @@ class MenuScene: ParentScene {
             Assets.shared.isLoaded = true
         }
         
-
-        self.backgroundColor = SKColor(red: 0.15, green: 0.15, blue: 0.3, alpha: 1.0)
         setHeader(withName: nil, andBackgroung:  "header1")
 
-//        let header = SKSpriteNode(imageNamed: "header1")
-//        header.position = CGPoint(x: self.frame.midX, y: self.frame.midY + 150)
-//        self.addChild(header)
-//
         let titles = ["play", "options", "best"]
         for (index, title) in titles.enumerated() {
             let button = ButtonNode(titled: title, backgroundName: "button_background")
@@ -31,24 +25,6 @@ class MenuScene: ParentScene {
             button.label.name = title
             self.addChild(button)
         }
-        
-//        let button1 = ButtonNode(titled: "play", backgroundName: "button_background")
-//        button1.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
-//        button1.name = "play"
-//        button1.label.name = "play"
-//        self.addChild(button1)
-//
-//        let button2 = ButtonNode(titled: "options", backgroundName: "button_background")
-//        button2.position = CGPoint(x: self.frame.midX, y: self.frame.midY - 100)
-//        button2.name = "options"
-//        button2.label.name = "options"
-//        self.addChild(button2)
-//
-//        let button3 = ButtonNode(titled: "best", backgroundName: "button_background")
-//        button3.position = CGPoint(x: self.frame.midX, y: self.frame.midY - 200)
-//        button3.name = "best"
-//        button3.label.name = "best"
-//        self.addChild(button3)
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let location = touches.first!.location(in: self)
@@ -66,6 +42,13 @@ class MenuScene: ParentScene {
             optionsScene.backScene = self
             optionsScene.scaleMode = .aspectFill
             self.scene!.view?.presentScene(optionsScene, transition: transition)
+        } else if node.name == "best" {
+            
+            let transition = SKTransition.crossFade(withDuration: 1.0)
+            let bestScene = BestScene(size: self.size)
+            bestScene.backScene = self
+            bestScene.scaleMode = .aspectFill
+            self.scene!.view?.presentScene(bestScene, transition: transition)
         }
     }
 }
