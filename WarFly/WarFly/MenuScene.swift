@@ -10,7 +10,7 @@ import SpriteKit
 
 class MenuScene: ParentScene {
     override func didMove(to view: SKView) {
-        if Assets.shared.isLoaded {
+        if !Assets.shared.isLoaded {
             Assets.shared.preloadAssets()
             Assets.shared.isLoaded = true
         }
