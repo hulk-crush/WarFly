@@ -239,6 +239,9 @@ extension GameScene: SKPhysicsContactDelegate {
         }
         
         if lives == 0 {
+            gameSettings.currentScore = hud.score
+            gameSettings.saveScores()
+            
             let gameOverScene = GameOverScene(size: self.size)
             gameOverScene.scaleMode = .aspectFill
             let transition = SKTransition.doorsCloseVertical(withDuration: 1.0)
@@ -268,7 +271,7 @@ extension GameScene: SKPhysicsContactDelegate {
                 player.greenPowerUp()
 
             }
-            }
+        }
             
         case[.enemy, .shot]: print("enemy vs shot")
         if contact.bodyA.node?.parent != nil  && contact.bodyB.node?.parent != nil {
@@ -281,7 +284,6 @@ extension GameScene: SKPhysicsContactDelegate {
             }
 
         default: preconditionFailure("Unable to detect collision category")
-            
         }
         
         func didEnd(_ contact: SKPhysicsContact) {
