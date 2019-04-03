@@ -30,7 +30,7 @@ class GameScene: ParentScene{
                 hud.life1.isHidden = false
                 hud.life2.isHidden = true
                 hud.life3.isHidden = true
-            
+                
             default:
                 break
             }
@@ -40,7 +40,7 @@ class GameScene: ParentScene{
     
     override func didMove(to view: SKView) {
         self.scene?.isPaused = false
-
+        
         guard  sceneManager.gameScene == nil else { return }
         
         sceneManager.gameScene = self
@@ -89,12 +89,12 @@ class GameScene: ParentScene{
         self.run(SKAction.repeatForever(SKAction.sequence([waitAction, spawnSpiralAction])))
         
     }
-
+    
     fileprivate func spawnSpiralOfEnemies() {
         let enemyTextureAtlas1 = Assets.shared.enemy_1Atlas //SKTextureAtlas(named: "Enemy_1")
         let enemyTextureAtlas2 = Assets.shared.enemy_2Atlas//SKTextureAtlas(named: "Enemy_2")
         SKTextureAtlas.preloadTextureAtlases([enemyTextureAtlas1, enemyTextureAtlas2]) { [unowned self] in
-
+            
             let randomNumber = Int(arc4random_uniform(2))
             let arrayOfAtlases = [enemyTextureAtlas1, enemyTextureAtlas2]
             let textureAtlas = arrayOfAtlases[randomNumber]
@@ -174,9 +174,9 @@ class GameScene: ParentScene{
                 node.removeFromParent()
             }
         }
-                enumerateChildNodes(withName: "shotSprite") { (node, stop) in
-                    if node.position.y >= self.size.height + 100 {
-                        node.removeFromParent()
+        enumerateChildNodes(withName: "shotSprite") { (node, stop) in
+            if node.position.y >= self.size.height + 100 {
+                node.removeFromParent()
             }
         }
     }
@@ -193,7 +193,7 @@ class GameScene: ParentScene{
         let node = self.atPoint(location)
         
         if node.name == "pause" {
-           
+            
             let transition = SKTransition.doorway(withDuration: 1.0)
             let pauseScene = PauseScene(size: self.size)
             pauseScene.scaleMode = .aspectFill
@@ -223,8 +223,8 @@ extension GameScene: SKPhysicsContactDelegate {
                 contact.bodyB.node?.removeFromParent()
                 lives -= 1
             }
-            }
-            
+        }
+        
         if lives == 0 {
             let gameOverScene = GameOverScene(size: self.size)
             gameOverScene.scaleMode = .aspectFill
@@ -234,20 +234,42 @@ extension GameScene: SKPhysicsContactDelegate {
             }
             
         case[.powerUp, .player]: print("power Up vs player")
+        
+        if contact.bodyA.node?.parent != nil && contact.bodyB.node?.parent != nil {
+            
+            if contact.bodyA.node?.name == "bluePowerUp" {
+                contact.bodyA.node?.removeFromParent()
+                lives = 3
+                player.bluePowerUp()
+            } else if contact.bodyB.node?.name == "bluePowerUp" {
+                contact.bodyB.node?.removeFromParent()
+                lives = 3
+                player.bluePowerUp()
+            }
+            
+            if contact.bodyA.node?.name == "greenPowerUp" {
+                contact.bodyA.node?.removeFromParent()
+                player.greenPowerUp()
+            } else {
+                contact.bodyB.node?.removeFromParent()
+                player.greenPowerUp()
+
+            }
+            }
+            
         case[.enemy, .shot]: print("enemy vs shot")
         hud.score += 5 
         if contact.bodyA.node?.parent != nil {
             contact.bodyA.node?.removeFromParent()
-        }
-        if contact.bodyB.node?.parent != nil {
             contact.bodyB.node?.removeFromParent()
+            
             }
         default: preconditionFailure("Unable to detect collision category")
-
+            
         }
-
-    func didEnd(_ contact: SKPhysicsContact) {
-    
+        
+        func didEnd(_ contact: SKPhysicsContact) {
+            
+        }
     }
-}
 }
