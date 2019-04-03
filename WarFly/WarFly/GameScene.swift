@@ -15,6 +15,28 @@ class GameScene: ParentScene{
     fileprivate var player: PlayerPlane!
     fileprivate let hud = HUD()
     fileprivate let screenSize = UIScreen.main.bounds.size
+    fileprivate var lives = 3 {
+        didSet {
+            switch lives {
+            case 3:
+                hud.life1.isHidden = false
+                hud.life2.isHidden = false
+                hud.life3.isHidden = false
+            case 2:
+                hud.life1.isHidden = false
+                hud.life2.isHidden = false
+                hud.life3.isHidden = true
+            case 1:
+                hud.life1.isHidden = false
+                hud.life2.isHidden = true
+                hud.life3.isHidden = true
+            
+            default:
+                break
+            }
+        }
+    }
+    
     
     override func didMove(to view: SKView) {
         self.scene?.isPaused = false
@@ -142,6 +164,16 @@ class GameScene: ParentScene{
                 node.removeFromParent()
             }
         }
+        enumerateChildNodes(withName: "bluePowerUp") { (node, stop) in
+            if node.position.y <= -100 {
+                node.removeFromParent()
+            }
+        }
+        enumerateChildNodes(withName: "greenPowerUp") { (node, stop) in
+            if node.position.y <= -100 {
+                node.removeFromParent()
+            }
+        }
                 enumerateChildNodes(withName: "shotSprite") { (node, stop) in
                     if node.position.y >= self.size.height + 100 {
                         node.removeFromParent()
@@ -182,14 +214,34 @@ extension GameScene: SKPhysicsContactDelegate {
         switch contactCategory {
         case[.enemy, .player]: print("enemy vs player")
         if contact.bodyA.node?.name == "sprite" {
-            contact.bodyA.node?.removeFromParent()
-        } else {
-            contact.bodyB.node?.removeFromParent()
+            if contact.bodyA.node?.parent != nil {
+                contact.bodyA.node?.removeFromParent()
+                lives -= 1
             }
+        } else {
+            if contact.bodyB.node?.parent != nil {
+                contact.bodyB.node?.removeFromParent()
+                lives -= 1
+            }
+            }
+            
+        if lives == 0 {
+            let gameOverScene = GameOverScene(size: self.size)
+            gameOverScene.scaleMode = .aspectFill
+            let transition = SKTransition.doorsCloseVertical(withDuration: 1.0)
+            self.scene!.view?.presentScene(gameOverScene, transition: transition)
+            
+            }
+            
         case[.powerUp, .player]: print("power Up vs player")
         case[.enemy, .shot]: print("enemy vs shot")
+        hud.score += 5 
+        if contact.bodyA.node?.parent != nil {
             contact.bodyA.node?.removeFromParent()
+        }
+        if contact.bodyB.node?.parent != nil {
             contact.bodyB.node?.removeFromParent()
+            }
         default: preconditionFailure("Unable to detect collision category")
 
         }
